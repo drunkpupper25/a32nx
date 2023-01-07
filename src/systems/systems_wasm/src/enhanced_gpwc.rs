@@ -2,8 +2,8 @@ use std::error::Error;
 
 use msfs::sim_connect;
 use msfs::sim_connect::{ClientDataArea, SimConnect};
-use systems::shared::arinc429::{Arinc429Word, SignStatus};
-use systems_wasm::{
+use systems::shared::arinc429::Arinc429Word;
+use crate::{
     aspects::{MsfsAspectBuilder, ObjectWrite, VariablesToClientData},
     Variable,
 };
