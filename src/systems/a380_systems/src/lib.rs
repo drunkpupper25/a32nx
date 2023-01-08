@@ -120,7 +120,6 @@ impl A380 {
             engines_flex_physics: EnginesFlexiblePhysics::new(context),
             enhanced_gpwc: EnhancedGPWC::new(
                 context,
-                AircraftType::A380X,
                 ElectricalBusType::DirectCurrent(1),
                 Vec::from([
                     Length::new::<nautical_mile>(10.0),
