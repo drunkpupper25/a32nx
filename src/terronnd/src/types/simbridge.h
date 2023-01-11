@@ -1,31 +1,16 @@
 #pragma once
 
+#include <SimConnect.h>
 #include <cstdint>
 
-#include "../types/Arinc429.h"
+namespace types {
 
-struct NativeSimulatorData {
+struct SimulatorData {
   double latitude;
   double longitude;
-  double potentiometer;
+  double potentiometerLeft;
+  double potentiometerRight;
 } __attribute__((packed));
-
-struct EgpwcSimulatorData {
-  Arinc429NumericWord destinationLatitude;
-  Arinc429NumericWord destinationLongitude;
-  Arinc429NumericWord presentLatitude;
-  Arinc429NumericWord presentLongitude;
-  Arinc429NumericWord altitude;
-  Arinc429NumericWord heading;
-  Arinc429NumericWord verticalSpeed;
-  bool gearIsDown;
-  std::uint16_t ndRangeCapt;
-  std::uint8_t ndModeCapt;
-  bool ndTerrainOnNdActiveCapt;
-  std::uint16_t ndRangeFO;
-  std::uint8_t ndModeFO;
-  bool ndTerrainOnNdActiveFO;
-};
 
 struct AircraftStatusData {
   std::uint8_t adiruValid;
@@ -49,12 +34,18 @@ struct AircraftStatusData {
   float groundTruthLongitude;
 } __attribute__((packed));
 
-enum TerrOnNdThresholdMode : std::uint8_t { PEAKS_MODE = 0, WARNING = 1, CAUTION = 2 };
+enum ThresholdMode : std::uint8_t { PEAKS_MODE = 0, WARNING = 1, CAUTION = 2 };
 
-struct TerrOnNdMetadata {
+struct ThresholdData {
   std::int16_t lowerThreshold;
   std::uint8_t lowerThresholdMode;
   std::int16_t upperThreshold;
   std::uint8_t upperThresholdMode;
   std::uint32_t frameByteCount;
 } __attribute__((packed));
+
+struct FrameData {
+  std::uint8_t data[SIMCONNECT_CLIENTDATA_MAX_SIZE];
+} __attribute__((packed));
+
+}  // namespace types
