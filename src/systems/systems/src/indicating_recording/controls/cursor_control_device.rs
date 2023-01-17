@@ -1,7 +1,10 @@
 use crate::{
-    controls::keyboard_and_cursor_control_unit::Button,
-    simulation::{InitContext, Read, SimulationElement, SimulationElementVisitor, SimulatorReader, VariableIdentifier},
+    indicating_recording::controls::keyboard_and_cursor_control_unit::Button,
     shared::{ElectricalBusType, ElectricalBuses},
+    simulation::{
+        InitContext, Read, SimulationElement, SimulationElementVisitor, SimulatorReader,
+        VariableIdentifier,
+    },
 };
 use std::collections::VecDeque;
 

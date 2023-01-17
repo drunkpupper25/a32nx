@@ -1,11 +1,11 @@
 use crate::{
-    controls::{
-        keyboard_and_cursor_control_unit::Button,
-        power_supply_relay::PowerSupplyRelay,
+    indicating_recording::controls::{
+        keyboard_and_cursor_control_unit::Button, power_supply_relay::PowerSupplyRelay,
     },
-    simulation::{InitContext, Read, SimulationElement, SimulationElementVisitor, SimulatorReader, VariableIdentifier},
-    shared::{
-        ElectricalBusType,
+    shared::ElectricalBusType,
+    simulation::{
+        InitContext, Read, SimulationElement, SimulationElementVisitor, SimulatorReader,
+        VariableIdentifier,
     },
 };
 use std::collections::VecDeque;

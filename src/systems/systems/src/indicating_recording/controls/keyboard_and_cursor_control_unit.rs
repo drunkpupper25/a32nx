@@ -1,10 +1,12 @@
 use crate::{
-    controls::{
-        cursor_control_device::CursorControlDevice,
-        keyboard::Keyboard,
+    indicating_recording::controls::{
+        cursor_control_device::CursorControlDevice, keyboard::Keyboard,
     },
-    simulation::{InitContext, Read, SimulationElement, SimulatorReader, SimulationElementVisitor, SimulatorWriter, VariableIdentifier, Write},
     shared::ElectricalBusType,
+    simulation::{
+        InitContext, Read, SimulationElement, SimulationElementVisitor, SimulatorReader,
+        SimulatorWriter, VariableIdentifier, Write,
+    },
 };
 use std::collections::VecDeque;
 
@@ -15,12 +17,7 @@ pub struct Button {
 }
 
 impl Button {
-    pub fn new(
-        context: &mut InitContext,
-        side: &str,
-        key: &str,
-        keycode: u16,
-    ) -> Self {
+    pub fn new(context: &mut InitContext, side: &str, key: &str, keycode: u16) -> Self {
         Button {
             button_id: context.get_identifier(format!("KCCU_{}_{}", side, key)),
             button_value: 0.0,
@@ -80,13 +77,18 @@ impl KeyboardAndCursorControlUnit {
         fallback_source_kbd: ElectricalBusType,
         primary_source_ccd: ElectricalBusType,
     ) -> Self {
+        let mut can_group_index = 1;
+        if side == "R" {
+            can_group_index = 2;
+        }
+
         KeyboardAndCursorControlUnit {
             ccd: CursorControlDevice::new(context, side, primary_source_ccd),
             kbd: Keyboard::new(context, side, primary_source_kbd, fallback_source_kbd),
             output_buffer: VecDeque::new(),
             output_can_buses: [
-                context.get_identifier(format!("KCCU_CAN_BUS_{}_1", side)),
-                context.get_identifier(format!("KCCU_CAN_BUS_{}_2", side)),
+                context.get_identifier(format!("CDS_CAN_BUS_{}_1", can_group_index)),
+                context.get_identifier(format!("CDS_CAN_BUS_{}_2", can_group_index)),
             ],
         }
     }
@@ -128,7 +130,9 @@ impl SimulationElement for KeyboardAndCursorControlUnit {
     fn write(&self, writer: &mut SimulatorWriter) {
         let next = self.output_buffer.get(0);
         if next.is_some() {
-            self.output_can_buses.iter().for_each(|bus| writer.write(bus, *next.unwrap()));
+            self.output_can_buses
+                .iter()
+                .for_each(|bus| writer.write(bus, *next.unwrap()));
         }
     }
 }
