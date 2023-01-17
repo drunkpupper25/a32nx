@@ -62,14 +62,14 @@ impl SimulationElement for Button {
  *   CCD keys are tagged with a set bit at position 14
  *   KBD keys are not tagged with bit bit at position 14
  */
-pub struct KeyboardAndCursorControlUnit {
+pub struct KeyboardCursorControlUnit {
     ccd: CursorControlDevice,
     kbd: Keyboard,
     output_buffer: VecDeque<u16>,
     output_can_buses: [VariableIdentifier; 2],
 }
 
-impl KeyboardAndCursorControlUnit {
+impl KeyboardCursorControlUnit {
     pub fn new(
         context: &mut InitContext,
         side: &str,
@@ -82,7 +82,7 @@ impl KeyboardAndCursorControlUnit {
             can_group_index = 2;
         }
 
-        KeyboardAndCursorControlUnit {
+        KeyboardCursorControlUnit {
             ccd: CursorControlDevice::new(context, side, primary_source_ccd),
             kbd: Keyboard::new(context, side, primary_source_kbd, fallback_source_kbd),
             output_buffer: VecDeque::new(),
@@ -120,7 +120,7 @@ impl KeyboardAndCursorControlUnit {
     }
 }
 
-impl SimulationElement for KeyboardAndCursorControlUnit {
+impl SimulationElement for KeyboardCursorControlUnit {
     fn accept<T: SimulationElementVisitor>(&mut self, visitor: &mut T) {
         self.ccd.accept(visitor);
         self.kbd.accept(visitor);
