@@ -11,6 +11,7 @@ mod power_consumption;
 
 use self::{
     air_conditioning::A380AirConditioning,
+    avionics_data_communication_network::AvionicsDataCommunicationNetwork,
     fuel::A380Fuel,
     pneumatic::{A380Pneumatic, A380PneumaticOverheadPanel},
 };
