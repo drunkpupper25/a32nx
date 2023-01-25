@@ -11,7 +11,7 @@ mod power_consumption;
 
 use self::{
     air_conditioning::A380AirConditioning,
-    avionics_data_communication_network::AvionicsDataCommunicationNetwork,
+    avionics_data_communication_network::A380AvionicsDataCommunicationNetwork,
     fuel::A380Fuel,
     pneumatic::{A380Pneumatic, A380PneumaticOverheadPanel},
 };
@@ -71,7 +71,7 @@ pub struct A380 {
     pneumatic: A380Pneumatic,
     radio_altimeters: A380RadioAltimeters,
     engines_flex_physics: EnginesFlexiblePhysics<4>,
-    adcn: AvionicsDataCommunicationNetwork,
+    adcn: A380AvionicsDataCommunicationNetwork,
 }
 impl A380 {
     pub fn new(context: &mut InitContext) -> A380 {
@@ -114,7 +114,7 @@ impl A380 {
             pneumatic: A380Pneumatic::new(context),
             radio_altimeters: A380RadioAltimeters::new(context),
             engines_flex_physics: EnginesFlexiblePhysics::new(context),
-            adcn: AvionicsDataCommunicationNetwork::new(context),
+            adcn: A380AvionicsDataCommunicationNetwork::new(context),
         }
     }
 }
